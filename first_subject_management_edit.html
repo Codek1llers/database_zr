@@ -1,0 +1,19 @@
+<form method="POST" action="/first_subject_management_edit">
+    <label for="subject_name">一级学科名称:</label>
+    <input type="text" id="subject_name" name="subject_name" required>
+    <button type="submit">查询</button>
+</form>
+
+{% if subject %}
+    <form method="POST" action="/first_subject_management_edit">
+        <label for="new_subject_code">学科编号:</label>
+        <input type="text" id="new_subject_code" name="subject_code" value="{{ subject.subject_code }}" required>
+
+        <label for="new_subject_name">学科名称:</label>
+        <input type="text" id="new_subject_name" name="subject_name" value="{{ subject.subject_name }}" required>
+
+        <!-- 其他表单项 -->
+
+        <button type="submit">提交修改</button>
+    </form>
+{% endif %}

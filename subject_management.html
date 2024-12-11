@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学科管理</title>
+    <link rel="stylesheet" href="../static/css/subject_management.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="management-container">
+        <h2>学科管理界面</h2>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('college_management') }}">学院管理</a></li>
+                <li><a href="{{ url_for('first_subject_management') }}">一级学科管理</a></li>
+                <li><a href="{{ url_for('second_subject_management') }}">二级学科管理</a></li>
+            </ul>
+        </nav>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

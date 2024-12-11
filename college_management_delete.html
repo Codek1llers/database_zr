@@ -1,0 +1,21 @@
+<!-- college_management_delete.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>删除学院</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+</head>
+<body>
+    <h1>删除学院</h1>
+
+    <form action="{{ url_for('college_management_delete') }}" method="POST">
+        <label for="college_name">选择学院名称：</label>
+        <input type="text" id="college_name" name="college_name" autocomplete="on" required>
+        <button type="submit">删除</button>
+    </form>
+
+    <a href="{{ url_for('college_management') }}">返回学院管理</a>
+</body>
+</html>

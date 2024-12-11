@@ -1,0 +1,22 @@
+<form method="GET" action="/first_subject_management_select">
+    <label for="subject_name">一级学科名称:</label>
+    <input type="text" id="subject_name" name="subject_name" required>
+    <button type="submit">查询</button>
+</form>
+
+{% if subject %}
+    <h3>一级学科信息</h3>
+    <p>学科编号: {{ subject.subject_code }}</p>
+    <p>学科名称: {{ subject.subject_name }}</p>
+    <p>学科类型: {{ subject.subject_type }}</p>
+    <p>招生数: {{ subject.total_admission }}</p>
+    <p>推荐免试招生数: {{ subject.recommendation_admission }}</p>
+    <p>所属学院: {{ subject.college_name }}</p>
+
+    <h4>下属二级学科</h4>
+    <ul>
+        {% for second_subject in second_subjects %}
+            <li>{{ second_subject.subject_name }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

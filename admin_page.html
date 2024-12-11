@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导师资格审核</title>
+    <link rel="stylesheet" href="../static/css/admin_page.css">
+</head>
+<body>
+    <div class="admin-page-container">
+        <h2>导师资格审核</h2>
+        <form method="POST" action="{{ url_for('update_mentor_qualification') }}">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>导师姓名</th>
+                        <th>导师职称</th>
+                        <th>导师简介</th>
+                        <th>邮箱</th>
+                        <th>电话</th>
+                        <th>招生资格</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mentor in mentors %}
+                    <tr>
+                        <td>{{ mentor['mentor_name'] }}</td>
+                        <td>{{ mentor['mentor_title'] }}</td>
+                        <td>{{ mentor['mentor_description'] }}</td>
+                        <td>{{ mentor['mentor_email'] }}</td>
+                        <td>{{ mentor['mentor_phone'] }}</td>
+                        <td>
+                            <input type="radio" name="qualification_{{ mentor['mentor_id'] }}" value="是"
+                                {% if mentor['has_admission_qualification'] == '是' %}checked{% endif %}> 是
+                            <input type="radio" name="qualification_{{ mentor['mentor_id'] }}" value="否"
+                                {% if mentor['has_admission_qualification'] == '否' %}checked{% endif %}> 否
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">提交审核</button>
+        </form>
+    </div>
+</body>
+</html>

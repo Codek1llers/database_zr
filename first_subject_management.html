@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一级学科管理</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+</head>
+<body>
+    <h1>一级学科管理</h1>
+
+    <nav>
+        <ul>
+            <!-- 增加一级学科 -->
+            <li><a href="{{ url_for('first_subject_management_add') }}">增加一级学科</a></li>
+            <!-- 删除一级学科 -->
+            <li><a href="{{ url_for('first_subject_management_delete') }}">删除一级学科</a></li>
+            <!-- 查找一级学科 -->
+            <li><a href="{{ url_for('first_subject_management_select') }}">查找一级学科</a></li>
+            <!-- 修改一级学科 -->
+            <li><a href="{{ url_for('first_subject_management_edit') }}">修改一级学科</a></li>
+        </ul>
+    </nav>
+
+</body>
+</html>

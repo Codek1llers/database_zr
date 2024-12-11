@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="../static/css/login_page.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>登录</h2>
+        <!-- 如果存在错误信息，显示错误提示 -->
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+        <form method="POST" action="{{ url_for('login_page') }}">
+            <label for="username">用户名：</label>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">密码：</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit">登录</button>
+        </form>
+        <p>没有账号？<a href="{{ url_for('register_page') }}">点击注册</a></p>
+    </div>
+</body>
+</html>

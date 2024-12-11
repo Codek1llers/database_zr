@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>增加学院</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+</head>
+<body>
+    <div class="container">
+        <h1>增加学院</h1>
+
+        <form action="{{ url_for('college_management_add') }}" method="POST">
+            <div class="form-group">
+                <label for="college_name">学院名称：</label>
+                <input type="text" id="college_name" name="college_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="college_code">学院编号：</label>
+                <input type="text" id="college_code" name="college_code" required>
+            </div>
+
+            <div class="form-group">
+                <label for="total_admission">总招生数：</label>
+                <input type="number" id="total_admission" name="total_admission" required>
+            </div>
+
+            <div class="form-group">
+                <label for="recommendation_admission">推免数：</label>
+                <input type="number" id="recommendation_admission" name="recommendation_admission" required>
+            </div>
+
+            <button type="submit">提交</button>
+        </form>
+
+        <a href="{{ url_for('college_management') }}" class="back-link">返回学院管理</a>
+    </div>
+</body>
+</html>

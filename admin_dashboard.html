@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理员界面</title>
+    <link rel="stylesheet" href="../static/css/admin_dashboard.css">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>管理员控制台</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin_page') }}">进入导师资格审核页面</a></li>
+                <li><a href="{{ url_for('linxuan_page') }}">进入导师遴选页面</a></li>
+                <li><a href="{{ url_for('subject_management') }}">学科管理</a></li>
+                <li><a href="{{ url_for('mentor_management') }}">导师管理</a></li>
+            </ul>
+        </nav>
+        <footer>
+            <p>&copy; 2024 管理系统. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

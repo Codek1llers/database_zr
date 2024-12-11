@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>导师遴选页面</title>
+    <link rel="stylesheet" href="../static/css/linxuan_page.css">
+</head>
+<body>
+    <div class="linxuan-page-container">
+        <h2>导师遴选</h2>
+        <form action="/update_mentor_selection" method="POST">
+        <table border="1">
+            <tr>
+                <th>导师ID</th>
+                <th>姓名</th>
+                <th>当前职称</th>
+                <th>简介</th>
+                <th>邮箱</th>
+                <th>电话</th>
+                <th>遴选为</th>
+            </tr>
+            {% for mentor in mentors %}
+            <tr>
+                <td>{{ mentor.mentor_id }}</td>
+                <td>{{ mentor.mentor_name }}</td>
+                <td>{{ mentor.mentor_title }}</td>
+                <td>{{ mentor.mentor_description }}</td>
+                <td>{{ mentor.mentor_email }}</td>
+                <td>{{ mentor.mentor_phone }}</td>
+                <td>
+                    <input type="hidden" name="mentor_ids" value="{{ mentor.mentor_id }}">
+                    <input type="radio" name="mentor_{{ mentor.mentor_id }}" value="学术型硕士生导师"> 学术型硕士生导师<br>
+                    <input type="radio" name="mentor_{{ mentor.mentor_id }}" value="专业学位型硕士生导师"> 专业学位型硕士生导师<br>
+                    <input type="radio" name="mentor_{{ mentor.mentor_id }}" value="博士生导师"> 博士生导师
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">提交</button>
+    </form>
+    </div>
+</body>
+</html>

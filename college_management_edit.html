@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学院修改管理</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+</head>
+<body>
+    <h1>修改学院信息</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- 查找学院信息 -->
+    <form action="{{ url_for('college_management_edit') }}" method="GET">
+        <label for="college_name">输入学院名称：</label>
+        <input type="text" id="college_name" name="college_name" value="{{ request.args.get('college_name', '') }}" autocomplete="on" required>
+        <button type="submit">查找学院</button>
+    </form>
+
+    {% if college %}
+    <!-- 修改学院信息表单 -->
+    <form action="{{ url_for('college_management_edit') }}" method="POST">
+        <h2>修改学院信息</h2>
+        <label for="college_code">学院编号：</label>
+        <input type="text" id="college_code" name="college_code" value="{{ college.college_code }}" required><br>
+
+        <label for="college_name">学院名称：</label>
+        <input type="text" id="college_name" name="college_name" value="{{ college.college_name }}" required><br>
+
+        <label for="total_admission">总招生数：</label>
+        <input type="number" id="total_admission" name="total_admission" value="{{ college.total_admission }}" required><br>
+
+        <label for="recommendation_admission">推免数：</label>
+        <input type="number" id="recommendation_admission" name="recommendation_admission" value="{{ college.recommendation_admission }}" required><br>
+
+        <button type="submit">更新学院信息</button>
+    </form>
+    {% else %}
+        <p>未找到相关学院信息，或请重新输入学院名称。</p>
+    {% endif %}
+
+    <a href="{{ url_for('college_management') }}">返回学院管理</a>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查找学院</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+    <!-- jQuery和jQuery UI 自动补全功能 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <h1>查找学院</h1>
+
+    <!-- 显示 flash 提示消息 -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('college_management_select') }}" method="POST">
+        <label for="college_name">输入学院名称：</label>
+        <input type="text" id="college_name" name="college_name" autocomplete="on" required>
+        <button type="submit">查找</button>
+    </form>
+
+    <!-- 自动补全脚本 -->
+    <script>
+        $(document).ready(function() {
+            // 自动补全学院名称
+            $("#college_name").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "{{ url_for('college_management_select') }}",
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {
+                            term: request.term  // 输入框内容
+                        },
+                        success: function(data) {
+                            response(data);  // 返回匹配的学院列表
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    {% if data %}
+        <h2>学院信息</h2>
+        {% for college in data %}
+            <p><strong>学院名称：</strong>{{ college.college_name }}</p>
+            <p><strong>总招生数：</strong>{{ college.total_admission }}</p>
+            <p><strong>推免数：</strong>{{ college.recommendation_admission }}</p>
+
+            <h3>下属一级学科</h3>
+            <ul>
+                {% for first_subject in college.first_subjects %}
+                    <li>{{ first_subject.subject_name }}
+                        <ul>
+                            {% for second_subject in first_subject.second_subjects %}
+                                <li>{{ second_subject.subject_name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>未找到相关学院信息。</p>
+    {% endif %}
+
+    <a href="{{ url_for('college_management') }}">返回学院管理</a>
+</body>
+</html>

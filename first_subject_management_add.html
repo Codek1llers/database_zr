@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加一级学科</title>
+    <link rel="stylesheet" href="../static/css/styles2.css">
+</head>
+<body>
+    <h1>添加一级学科</h1>
+
+    <!-- 搜索学院 -->
+    <form id="collegeSearchForm">
+        <label for="college_name">学院名称：</label>
+        <input type="text" id="college_name" name="college_name" required>
+        <button type="submit">查询学院</button>
+    </form>
+
+    <!-- 显示学院信息及下属一级学科 -->
+    <div id="collegeInfo"></div>
+    <div id="firstSubjectInfo"></div>
+
+    <!-- 添加一级学科表单 -->
+    <form id="addSubjectForm" method="POST" action="/first_subject_management_add">
+
+        <input type="hidden" id="selected_college_id" name="college_id">
+
+        <label for="subject_code">学科代码：</label>
+        <input type="text" id="subject_code" name="subject_code" required>
+
+        <label for="subject_name">学科名称：</label>
+        <input type="text" id="subject_name" name="subject_name" required>
+
+        <label for="description">描述：</label>
+        <textarea id="description" name="description" required></textarea>
+
+        <label for="subject_type">学科类型：</label>
+        <select id="subject_type" name="subject_type" required>
+            <option value="学术型">学术型</option>
+            <option value="专业学位型">专业学位型</option>
+        </select>
+
+
+        <label for="total_admission">总招生人数：</label>
+        <input type="number" id="total_admission" name="total_admission" required>
+
+        <label for="recommendation_admission">推荐招生人数：</label>
+        <input type="number" id="recommendation_admission" name="recommendation_admission" required>
+
+        <button type="submit">提交</button>
+    </form>
+
+    <script>
+        // 搜索学院并显示学院信息
+    document.getElementById('collegeSearchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const collegeName = document.getElementById('college_name').value.trim(); // 去除空格
+
+        if (!collegeName) {
+            alert('请输入学院名称！');
+            return;
+        }
+
+        fetch('/search_college_and_first_subjects', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({'college_name': collegeName})
+        })
+        .then(response => response.json())
+        .then(data => {
+            const collegeInfo = document.getElementById('collegeInfo');
+            const firstSubjectInfo = document.getElementById('firstSubjectInfo');
+            const addSubjectForm = document.getElementById('addSubjectForm');
+
+            if (data.success) {
+                // 显示学院信息
+                collegeInfo.innerHTML = `
+                    <h3>学院信息</h3>
+                    <p>学院代码: ${data.college.college_code}</p>
+                    <p>学院名称: ${data.college.college_name}</p>
+                    <p>总招生人数: ${data.college.total_admission}</p>
+                    <p>推荐招生人数: ${data.college.recommendation_admission}</p>
+                `;
+
+                // 显示一级学科信息
+                firstSubjectInfo.innerHTML = '<h3>一级学科</h3>';
+                data.first_subjects.forEach(subject => {
+                    firstSubjectInfo.innerHTML += `<p>${subject.subject_code} - ${subject.subject_name}</p>`;
+                });
+
+                // 填充隐藏字段的 college_id
+                document.getElementById('selected_college_id').value = data.college.college_id;
+
+                addSubjectForm.style.display = 'block';
+            } else {
+                collegeInfo.innerHTML = '<p>未找到该学院</p>';
+                firstSubjectInfo.innerHTML = '';
+                addSubjectForm.style.display = 'none';
+            }
+        });
+    });
+
+
+               // 提交添加一级学科表单
+        document.getElementById('addSubjectForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const collegeId = document.getElementById('selected_college_id').value;
+
+    if (!collegeId || parseInt(collegeId) <= 0) {
+        alert('请先查询并选择有效的学院！');
+        return;
+    }
+
+    const formData = new FormData(this);
+    const formObject = {};
+    formData.forEach((value, key) => formObject[key] = value);
+
+    fetch('/first_subject_management_add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formObject)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            window.location.href = '/first_subject_management'; // 跳转到一级学科管理页面
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('提交失败，请重试');
+    });
+});
+
+    </script>
+</body>
+</html>

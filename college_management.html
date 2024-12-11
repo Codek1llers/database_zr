@@ -1,0 +1,24 @@
+<!-- college_management.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学院管理</title>
+    <link rel="stylesheet" href="../static/css/admin_dashboard.css">
+</head>
+<body>
+    <header>
+    <h1>学院管理</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('college_management_add') }}">增加学院</a></li>
+            <li><a href="{{ url_for('college_management_delete') }}">删除学院</a></li>
+            <li><a href="{{ url_for('college_management_select') }}">查找学院</a></li>
+            <li><a href="{{ url_for('college_management_edit') }}">修改学院</a></li>
+        </ul>
+    </nav>
+
+</body>
+</html>
